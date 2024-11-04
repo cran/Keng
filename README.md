@@ -1,15 +1,19 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-## Keng (庚)
+# Keng(庚) <img src="man/figures/logo.png" align="right" height="139" alt="Keng" />
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/Keng)](https://CRAN.R-project.org/package=Keng)
 <!-- badges: end -->
 
 The `Keng` package is named after Loo-Keng Hua, who made great
 achievements in mathematics mainly through self-study. Loo-Keng Hua
-encouraged the novices to show their axe skills at the gate of Ban’s
-house, so the `Keng` package comes.
+encouraged novices to show their axe skills at the gate of Ban’s house,
+so the `Keng` package comes. In addition, `Keng` is the abbreviation of
+“Knock Errors off Nice Guesses.”
 
 The `Keng` package aims to automate the computations Qingyao repeat in
 his psychological research and teaching. Hope the functions and data
@@ -47,7 +51,7 @@ significance levels of *p* = 0.1, 0.05, 0.01, 0.001 when the sample size
 `test_r()` tests the significance of *r* using *t*-test when *r* and *n*
 is known.
 
-### PRE of the linear model
+### The linear model
 
-`test_PRE()` computes and tests (*F*-test) the *PRE* of the augmented
-model compared with the compact model.
+`compare_lm()` compare `lm()`’s fitted outputs using *PRE* and
+*R*<sup>2</sup>.
