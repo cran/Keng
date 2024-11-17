@@ -25,8 +25,8 @@ You can install the development version of `Keng` from
 [GitHub](https://github.com/) with:
 
 ``` r
-install.packages("pak")
-pak::pkg_install("qyaozh/Keng")
+install.packages("devtools")
+devtools::install_github("qyaozh/Keng", dependencies = TRUE, build_vignettes = TRUE)
 ```
 
 ## Load
@@ -42,9 +42,20 @@ library(Keng)
 Here is a list of the functions and data gathered in the `Keng` package.
 Their usages are detailed in the documentation.
 
+### Data
+
+`depress` is a subset of data from a research about depression and
+coping.
+
+### Variable transformation
+
+`Scale()` could change the origin of a numeric vector `x` (including
+mean-centering it), or standardize the mean and standard deviation of
+`x` (including transforming it to its z-score).
+
 ### Pearson’s *r*
 
-`cut_r()` give you the cut-off values of Pearson’s *r* at the
+`cut_r()` gives you the cut-off values of Pearson’s *r* at the
 significance levels of *p* = 0.1, 0.05, 0.01, 0.001 when the sample size
 *n* is known.
 
@@ -53,5 +64,5 @@ is known.
 
 ### The linear model
 
-`compare_lm()` compare `lm()`’s fitted outputs using *PRE* and
+`compare_lm()` compares `lm()`’s fitted outputs using *PRE* and
 *R*<sup>2</sup>.
