@@ -18,7 +18,7 @@ summary(fitA)
 anova(fitC, fitA)
 
 ## -----------------------------------------------------------------------------
-format(compare_lm(fitC, fitA), digits = 3, nsmall = 3)
+print(compare_lm(fitC, fitA), digits = 3)
 
 ## -----------------------------------------------------------------------------
 dm_res <- lm(dm1 ~ em1 + am1, depress)$residuals
@@ -32,5 +32,5 @@ summary(lm(dm_res ~ pm_res, data.frame(dm_res, pm_res)))
 ## -----------------------------------------------------------------------------
 fitC <- lm(dm_res ~ 1, resDat)
 fitA <- lm(dm_res ~ pm_res, resDat)
-format(compare_lm(fitC, fitA), digits = 3, nsmall = 3)
+print(compare_lm(fitC, fitA), digits = 3)
 

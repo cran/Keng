@@ -417,15 +417,19 @@ both examine the unique effect of <em>pm1</em>. In the case that the
 <h2>The <em>PRE</em> of the single parameter</h2>
 <p>Thirdly, examine the unique effect of <em>pm1</em> using
 <em>PRE</em>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">format</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">nsmall =</span> <span class="dv">3</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt;            SSE     df R_squared R_squared_adj   PRE F(PA-PC,n-PA)       p</span></span>
-<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; Model C 11.498 91.000    0.1555         0.137    NA            NA      NA</span></span>
-<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; Model A 10.224 90.000    0.2491         0.224    NA            NA      NA</span></span>
-<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; A vs. C  1.274  1.000    0.0936            NA 0.111        11.217 0.00119</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt;         PRE_adj</span></span>
-<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; Model C      NA</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; Model A      NA</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; A vs. C   0.101</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="co">#&gt;                      Baseline        C        A  A vs. C</span></span>
+<span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="co">#&gt; SSE                      13.6 1.15e+01 1.02e+01  1.27427</span></span>
+<span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt; df                       93.0 9.10e+01 9.00e+01  1.00000</span></span>
+<span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; Number of parameters      1.0 3.00e+00 4.00e+00  1.00000</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA 1.55e-01 2.49e-01  0.09359</span></span>
+<span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA 1.84e-01 3.32e-01  0.12464</span></span>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA 1.37e-01 2.24e-01       NA</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; PRE                        NA 1.55e-01 2.49e-01  0.11082</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA 8.38e+00 9.95e+00 11.21719</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; p                          NA 4.58e-04 9.93e-06  0.00119</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA 1.37e-01 2.24e-01  0.10094</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; power_post                 NA 9.59e-01 9.97e-01  0.91202</span></span></code></pre></div>
 <p>As shown, <em>F</em> (1, 90) = 11.217, <em>p</em> = 0.00119. The
 <em>F</em>-test of <em>PRE</em> is equivalent to the <em>F</em>-test of
 anova above.</p>
@@ -482,15 +486,19 @@ statistical purpose changing, the referents of Model C and Model A
 change.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a>fitC <span class="ot">&lt;-</span> <span class="fu">lm</span>(dm_res <span class="sc">~</span> <span class="dv">1</span>, resDat)</span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>fitA <span class="ot">&lt;-</span> <span class="fu">lm</span>(dm_res <span class="sc">~</span> pm_res, resDat)</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">format</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>, <span class="at">nsmall =</span> <span class="dv">3</span>)</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;            SSE     df R_squared R_squared_adj   PRE F(PA-PC,n-PA)       p</span></span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; Model C 11.498 93.000     0.000         0.000    NA            NA      NA</span></span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; Model A 10.224 92.000     0.111         0.101    NA            NA      NA</span></span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; A vs. C  1.274  1.000     0.111            NA 0.111        11.466 0.00104</span></span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt;         PRE_adj</span></span>
-<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; Model C      NA</span></span>
-<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; Model A      NA</span></span>
-<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; A vs. C   0.101</span></span></code></pre></div>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="co">#&gt;                      Baseline    C        A  A vs. C</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="co">#&gt; SSE                      11.5 11.5 10.22400  1.27427</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="co">#&gt; df                       93.0 93.0 92.00000  1.00000</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="co">#&gt; Number of parameters      1.0  1.0  2.00000  1.00000</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA  0.0  0.11082  0.11082</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA  0.0  0.12464  0.12464</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA  0.0  0.10116       NA</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="co">#&gt; PRE                        NA  0.0  0.11082  0.11082</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA   NA 11.46646 11.46646</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="co">#&gt; p                          NA   NA  0.00104  0.00104</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA  0.0  0.10116  0.10116</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="co">#&gt; power_post                 NA   NA  0.91784  0.91784</span></span></code></pre></div>
 <p>Compare the <em>PRE</em> of <code>pm_res</code> with the <em>PRE</em>
 of <code>pm1</code>. It’s shown that two <em>PRE</em>s are equivalent.
 However, <em>df2</em>s are different, which make <em>F</em>s, as well as

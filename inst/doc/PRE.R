@@ -32,15 +32,15 @@ depress$class9 <- ifelse(depress$class == 9, 1, 0)
 ## -----------------------------------------------------------------------------
 fitC <- lm(dm1 ~ class3 + class5 + class9, depress)
 fitA <- lm(dm1 ~ class3 + class5 + class9 + gender, depress)
-format(compare_lm(fitC, fitA), digits = 3, nsmall = 3)
+print(compare_lm(fitC, fitA), digits = 3)
 
 ## -----------------------------------------------------------------------------
 fitC <- lm(dm1 ~ gender, depress)
 fitA <- lm(dm1 ~ class3 + class5 + class9 + gender, depress)
-format(compare_lm(fitC, fitA), digits = 3, nsmall = 3)
+print(compare_lm(fitC, fitA), digits = 3)
 
 ## -----------------------------------------------------------------------------
 fitC <- lm(dm1 ~ 1, depress)
 fitA <- lm(dm1 ~ class3 + class5 + class9 + gender, depress)
-format(compare_lm(fitC, fitA), digits = 3, nsmall = 3)
+print(compare_lm(fitC, fitA), digits = 3)
 
