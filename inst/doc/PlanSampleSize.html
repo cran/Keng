@@ -340,28 +340,30 @@ code > span.er { color: #a61717; background-color: #e3d2d2; }
 
 
 
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(Keng)</span></code></pre></div>
 <p>The significance of the unique effect of one or a set of predictors
-in the regression model is determined by the PRE (Proportional Reduction
+in the regression model is determined by (1) PRE (Proportional Reduction
 in Error, also called partial <em>eta_squared</em> in ANOVA, or partial
-<em>R_squared</em> in regression), number of parameters in the
-regression model, and sample size. As a result, given <em>PRE</em>,
-number of parameters in the regression model, and expected statistical
-power, we can plan the sample size for one or a set of predictors to
-reach the expected statistical power (usually 0.80) and the expected
-significance level (usually 0.05). So, <code>power_lm()</code>
-comes.</p>
-<div id="power_lm" class="section level2">
-<h2><code>power_lm()</code></h2>
-<p>To plan sample size for one or a set of predictors, the following
-information are needed and passed to <code>power_lm()</code> as
-arguments:</p>
-<ul>
-<li><p><code>PRE</code></p>
+<em>R_squared</em> in regression), (2) number of parameters in the
+regression model, and (3) sample size. As a result, given <em>PRE</em>,
+the number of parameters in the regression model, and expected
+statistical power, we can plan the sample size for one or a set of
+predictors to reach the expected statistical power (usually 0.80) and
+the expected significance level (usually 0.05). This is just
+<code>power_lm()</code>’s mission.</p>
+<p>To compare the power of r<sup>2</sup> and PRE, <code>Keng</code> also
+gives <code>power_r()</code> to conduct power analysis for Pearson’s
+<em>r</em>. <code>power_r()</code> has readable arguments and is easy to
+use, hence is not detailed in vignettes.</p>
+<div id="understand-the-arguments-of-power_lm" class="section level2">
+<h2>Understand the arguments of <code>power_lm()</code></h2>
+<p>Among the arguments of <code>power_lm()</code>, PRE, PC, and PA merit
+further explanation.</p>
+<div id="pre" class="section level3">
+<h3><code>PRE</code></h3>
 <p><em>PRE</em> is partial <em>R_squared</em>. Partial
 <em>R_squared</em> is the square of the partial correlation. You could
 calculate <em>PRE</em> from the partial correlation. Other statistical
-software or R packages often plan sample size for regression model
+software or R packages often plan sample size for regression models
 through Cohen’s <em>f_squared</em>, or its square root, Cohen’s
 <em>f</em>. <code>power_lm()</code> use <em>PRE</em> here because
 <em>PRE</em> and its square root, partial correlation, are more
@@ -381,8 +383,10 @@ depression, and in this case you could convert Cohen’s
 <em>f_squared</em> or <em>f</em> to <em>PRE</em>. <code>Keng</code>
 provides a function <code>calc_PRE()</code> to help users to convert the
 partial correlation <code>r_p</code>, or <code>f_squared</code> or
-<code>f</code> to <em>PRE</em>.</p></li>
-<li><p><code>PA</code> and <code>PC</code></p>
+<code>f</code> to <em>PRE</em>.</p>
+</div>
+<div id="pa-and-pc" class="section level3">
+<h3><code>PA</code> and <code>PC</code></h3>
 <p>Suppose that your regression model has m predictors totally. This
 model is the augmented model (Model A), and has both the focal
 predictors (e.g., gender, the dummy codes of class) and other
@@ -392,22 +396,11 @@ intercept is also a parameter. <code>PA</code> should be at least 1.</p>
 <p>The model without the focal predictors is the compact model (Model
 C). Suppose that the number of the focal predictors is k, the resulting
 number of parameters of the compact model (Model C), <code>PC</code>, is
-m + 1 - k. <code>PC</code> should be at least 0.</p></li>
-<li><p><code>power</code></p>
-<p><code>power</code> is the expected statistical power, usually it’s
-set to be 0.80.</p></li>
-<li><p>sig.level</p>
-<p><code>sig.level</code> is the expected significance level, and it’s
-commonly known as the cut-off <em>p</em> -value. Usually it’s set to be
-0.05.</p></li>
-<li><p><code>n</code></p>
-<p><code>n</code> is an optional argument. <code>n</code> is the sample
-size, and should be larger than <code>PA</code>. If <code>n</code> is
-given, post-hoc power would be computed.</p></li>
-</ul>
+m + 1 - k. <code>PC</code> should be at least 0.</p>
 <p>Note that <code>power_lm()</code> follows Aberson’s (2019), and the
-planed sample size is more conservative than other statistical software
+planned sample size is more conservative than other statistical software
 like G*power. However, the difference is small and negligible.</p>
+</div>
 </div>
 <div id="application" class="section level2">
 <h2>Application</h2>
@@ -417,9 +410,28 @@ common research designs.</p>
 <div id="a-set-of-predictors" class="section level3">
 <h3>A set of predictors</h3>
 <p>You may be interested in the power and required sample size of the
-full regression model, you could treat all predictors as a set. Suppose
-your regression model has m predictors, in this case the Model C is the
-intercept-only model, hence PC = 1, and PA = m + 1.</p>
+full regression model, you could treat all predictors as a set. The
+Model C is the intercept-only model, hence PC = 1. Suppose your
+regression model has m predictors, hence PA = m + 1.</p>
+<p>m predictors’ total PRE is actually R<sup>2</sup>. Assuming m
+predictors’ total PRE is 0.02, m is 10, we plan the sample size using
+the following code:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(Keng)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">power_lm</span>(<span class="at">PRE =</span> <span class="fl">0.02</span>, <span class="at">PC =</span> <span class="dv">1</span>, <span class="at">PA =</span> <span class="dv">11</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="co">#&gt; -- Given ---------------------------</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="co">#&gt; PRE = 0.02</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="co">#&gt; f_squared = 0.02040816</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="co">#&gt; PC = 1</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="co">#&gt; PA = 11</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="co">#&gt; sig_level = 0.05</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co">#&gt; -- Post-hoc power analysis --------</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="co">#&gt; n = NULL</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="co">#&gt; power_post = NULL</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="co">#&gt; -- Sample size planning -----------</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co">#&gt; Expected power = 0.8</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a><span class="co">#&gt; Minimum sample size = 816</span></span></code></pre></div>
+<p>As shown above, this design needs at least 816
+cases/observations.</p>
 </div>
 <div id="a-continuous-predictor" class="section level3">
 <h3>A continuous predictor</h3>
@@ -439,18 +451,39 @@ interaction terms and one three-way interaction term. Suppose your
 regression model has m predictors, in this case PA = m + 1, PC = (m + 1)
 - 3.</p>
 </div>
-<div id="one-sample-t--test-or-a-intercept-only-regression" class="section level3">
-<h3>One-sample <em>t</em> -test or a intercept-only regression</h3>
+<div id="one-sample-t--test-or-an-intercept-only-regression" class="section level3">
+<h3>One-sample <em>t</em> -test or an intercept-only regression</h3>
 <p>If you are interested in the difference between the mean of one group
 and 0, you may turn to the one-sample <em>t</em> -test. Or, you could
-establish a intercept-only model. Then the focal parameter is the
+establish an intercept-only model. Then the focal parameter is the
 intercept. In this case PA = 1, PC = 0.</p>
 <p>Note that in this case you must use the <strong>CORRECT</strong>
-<em>PRE</em> to yield correct power and planned sample size. Do not
+<em>PRE</em> to yield the correct power and planned sample size. Do not
 compute <em>PRE</em> from Cohen’s one-sample <em>d</em> ; instead,
 compute <em>PRE</em> from the <em>t</em> value of the one-sample
-<em>t</em> -test. You could also compute the correct <em>PRE</em> using
-<code>compare_lm()</code> function.</p>
+<em>t</em> -test by converting <em>t</em> to <em>r</em>, and then
+converting <em>r</em> to <em>PRE</em>. You could also compute the
+correct <em>PRE</em> using <code>compare_lm()</code> function.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">library</span>(Keng)</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="fu">data</span>(<span class="st">&quot;depress&quot;</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co"># WRONG PRE for the one-sample t-test</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a>(Cohens_d <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">cohens_d</span>(dm1 <span class="sc">~</span> <span class="dv">1</span>, <span class="at">data =</span> depress)<span class="sc">$</span>Cohens_d)</span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; [1] 4.985268</span></span>
+<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a>(r_from_d <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">d_to_r</span>(Cohens_d, <span class="at">n1 =</span> <span class="dv">94</span>))</span>
+<span id="cb2-7"><a href="#cb2-7" tabindex="-1"></a><span class="co">#&gt; [1] 0.9287831</span></span>
+<span id="cb2-8"><a href="#cb2-8" tabindex="-1"></a>(PRE_from_d <span class="ot">&lt;-</span> r_from_d<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb2-9"><a href="#cb2-9" tabindex="-1"></a><span class="co">#&gt; [1] 0.862638</span></span>
+<span id="cb2-10"><a href="#cb2-10" tabindex="-1"></a><span class="co"># CORRECT PRE for the one-sample t-test</span></span>
+<span id="cb2-11"><a href="#cb2-11" tabindex="-1"></a>out <span class="ot">&lt;-</span> <span class="fu">t.test</span>(dm1 <span class="sc">~</span> <span class="dv">1</span>, depress)</span>
+<span id="cb2-12"><a href="#cb2-12" tabindex="-1"></a>(r_from_t <span class="ot">&lt;-</span> effectsize<span class="sc">::</span><span class="fu">t_to_r</span>(<span class="at">t =</span> out<span class="sc">$</span>statistic, <span class="at">df_error =</span> out<span class="sc">$</span>parameter)<span class="sc">$</span>r)</span>
+<span id="cb2-13"><a href="#cb2-13" tabindex="-1"></a><span class="co">#&gt; [1] 0.9806709</span></span>
+<span id="cb2-14"><a href="#cb2-14" tabindex="-1"></a>(PRE_from_t <span class="ot">&lt;-</span> r_from_t<span class="sc">^</span><span class="dv">2</span>)</span>
+<span id="cb2-15"><a href="#cb2-15" tabindex="-1"></a><span class="co">#&gt; [1] 0.9617153</span></span>
+<span id="cb2-16"><a href="#cb2-16" tabindex="-1"></a><span class="co"># PRE from lm()</span></span>
+<span id="cb2-17"><a href="#cb2-17" tabindex="-1"></a>fit0 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dm1 <span class="sc">~</span> <span class="dv">0</span>, depress)</span>
+<span id="cb2-18"><a href="#cb2-18" tabindex="-1"></a>fit1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(dm1 <span class="sc">~</span> <span class="dv">1</span>, depress)</span>
+<span id="cb2-19"><a href="#cb2-19" tabindex="-1"></a><span class="fu">compare_lm</span>(fit0, fit1)[<span class="dv">7</span>, <span class="dv">4</span>]</span>
+<span id="cb2-20"><a href="#cb2-20" tabindex="-1"></a><span class="co">#&gt; [1] NA</span></span></code></pre></div>
 </div>
 <div id="two-sample-t--test-or-a-binary-predictor" class="section level3">
 <h3>Two-sample <em>t</em> -test or a binary predictor</h3>
@@ -462,7 +495,7 @@ predictor. Suppose your regression model has m predictors, in this case
 PA = m + 1, PC = (m + 1) - 1.</p>
 </div>
 <div id="anova-or-a-multicategorical-predictor" class="section level3">
-<h3>ANOVA or A multicategorical predictor</h3>
+<h3>ANOVA or a multicategorical predictor</h3>
 <p>If you are interested in the difference between multiple groups, you
 may turn to ANOVA. Or, you could treat the group variable as a
 multicategorical independent variable. Then you could code it using a
@@ -477,11 +510,11 @@ Suppose your regression model has m predictors, among which there are (j
 <p>If you are interested in the outcome that were repeatedly measured,
 you may turn to repeated-measures-ANOVA. In essence,
 repeated-measures-ANOVA computes the difference score of interest
-(contrasts), and then conduct between-factor ANOVA. Similarly, you could
-compute the difference score of interest, and then conduct regression
-analysis.</p>
+(contrasts), and then conducts between-factor ANOVA. Similarly, you
+could compute the difference score of interest, and then conduct
+regression analyses.</p>
 <p>A special case is there is no between-subject factor. Under this
-circumstance, treat the difference score as the outcome and establish a
+circumstance, treat the difference score as the outcome and establish an
 intercept-only model like one-sample <em>t</em> -test.</p>
 </div>
 </div>

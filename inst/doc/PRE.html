@@ -399,16 +399,17 @@ Model A with <code>gender</code> against Model C without
 <span id="cb4-3"><a href="#cb4-3" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" tabindex="-1"></a><span class="co">#&gt;                      Baseline       C       A  A vs. C</span></span>
 <span id="cb4-5"><a href="#cb4-5" tabindex="-1"></a><span class="co">#&gt; SSE                      13.6 12.8932 12.8678  0.02542</span></span>
-<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; df                       93.0 90.0000 89.0000  1.00000</span></span>
+<span id="cb4-6"><a href="#cb4-6" tabindex="-1"></a><span class="co">#&gt; n                        94.0 94.0000 94.0000 94.00000</span></span>
 <span id="cb4-7"><a href="#cb4-7" tabindex="-1"></a><span class="co">#&gt; Number of parameters      1.0  4.0000  5.0000  1.00000</span></span>
-<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA  0.0530  0.0549  0.00187</span></span>
-<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA  0.0560  0.0581  0.00198</span></span>
-<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA  0.0214  0.0124       NA</span></span>
-<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; PRE                        NA  0.0530  0.0549  0.00197</span></span>
-<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA  1.6791  1.2917  0.17583</span></span>
-<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; p                          NA  0.1771  0.2794  0.67599</span></span>
-<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA  0.0214  0.0124 -0.00924</span></span>
-<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; power_post                 NA  0.4263  0.3887  0.06993</span></span></code></pre></div>
+<span id="cb4-8"><a href="#cb4-8" tabindex="-1"></a><span class="co">#&gt; df                       93.0 90.0000 89.0000  1.00000</span></span>
+<span id="cb4-9"><a href="#cb4-9" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA  0.0530  0.0549  0.00187</span></span>
+<span id="cb4-10"><a href="#cb4-10" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA  0.0560  0.0581  0.00198</span></span>
+<span id="cb4-11"><a href="#cb4-11" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA  0.0214  0.0124       NA</span></span>
+<span id="cb4-12"><a href="#cb4-12" tabindex="-1"></a><span class="co">#&gt; PRE                        NA  0.0530  0.0549  0.00197</span></span>
+<span id="cb4-13"><a href="#cb4-13" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA  1.6791  1.2917  0.17583</span></span>
+<span id="cb4-14"><a href="#cb4-14" tabindex="-1"></a><span class="co">#&gt; p                          NA  0.1771  0.2794  0.67599</span></span>
+<span id="cb4-15"><a href="#cb4-15" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA  0.0214  0.0124 -0.00924</span></span>
+<span id="cb4-16"><a href="#cb4-16" tabindex="-1"></a><span class="co">#&gt; power_post                 NA  0.4263  0.3887  0.06993</span></span></code></pre></div>
 <p>Compare gender’s <em>PRE</em> and partial Eta-squared. They should be
 equal.</p>
 <p>We compute the <em>PRE</em> of <code>class</code>. Note that in
@@ -420,16 +421,17 @@ of all <code>class</code>’s dummy codes: <code>class3</code>,
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt;                      Baseline        C       A A vs. C</span></span>
 <span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; SSE                      13.6 13.59681 12.8678  0.7291</span></span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; df                       93.0 92.00000 89.0000  3.0000</span></span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a><span class="co">#&gt; n                        94.0 94.00000 94.0000 94.0000</span></span>
 <span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co">#&gt; Number of parameters      1.0  2.00000  5.0000  3.0000</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA  0.00132  0.0549  0.0535</span></span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA  0.00132  0.0581  0.0567</span></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA -0.00953  0.0124      NA</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; PRE                        NA  0.00132  0.0549  0.0536</span></span>
-<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA  0.12165  1.2917  1.6808</span></span>
-<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; p                          NA  0.72805  0.2794  0.1768</span></span>
-<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA -0.00953  0.0124  0.0217</span></span>
-<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; power_post                 NA  0.06376  0.3887  0.4266</span></span></code></pre></div>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a><span class="co">#&gt; df                       93.0 92.00000 89.0000  3.0000</span></span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA  0.00132  0.0549  0.0535</span></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA  0.00132  0.0581  0.0567</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA -0.00953  0.0124      NA</span></span>
+<span id="cb5-12"><a href="#cb5-12" tabindex="-1"></a><span class="co">#&gt; PRE                        NA  0.00132  0.0549  0.0536</span></span>
+<span id="cb5-13"><a href="#cb5-13" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA  0.12165  1.2917  1.6808</span></span>
+<span id="cb5-14"><a href="#cb5-14" tabindex="-1"></a><span class="co">#&gt; p                          NA  0.72805  0.2794  0.1768</span></span>
+<span id="cb5-15"><a href="#cb5-15" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA -0.00953  0.0124  0.0217</span></span>
+<span id="cb5-16"><a href="#cb5-16" tabindex="-1"></a><span class="co">#&gt; power_post                 NA  0.06376  0.3887  0.4266</span></span></code></pre></div>
 <p>Compare class’s <em>PRE</em> and partial Eta-squared. They should be
 equal.</p>
 <p>We compute the <em>PRE</em> of the full model(Model A). The
@@ -441,16 +443,17 @@ model.</p>
 <span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="fu">print</span>(<span class="fu">compare_lm</span>(fitC, fitA), <span class="at">digits =</span> <span class="dv">3</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="co">#&gt;                      Baseline        C       A A vs. C</span></span>
 <span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="co">#&gt; SSE                      13.6 1.36e+01 12.8678  0.7470</span></span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; df                       93.0 9.30e+01 89.0000  4.0000</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="co">#&gt; n                        94.0 9.40e+01 94.0000 94.0000</span></span>
 <span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="co">#&gt; Number of parameters      1.0 1.00e+00  5.0000  4.0000</span></span>
-<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA 6.52e-16  0.0549  0.0549</span></span>
-<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA 6.66e-16  0.0581  0.0581</span></span>
-<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA 7.77e-16  0.0124      NA</span></span>
-<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; PRE                        NA 6.66e-16  0.0549  0.0549</span></span>
-<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA       NA  1.2917  1.2917</span></span>
-<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; p                          NA       NA  0.2794  0.2794</span></span>
-<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA 6.66e-16  0.0124  0.0124</span></span>
-<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; power_post                 NA       NA  0.3887  0.3887</span></span></code></pre></div>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="co">#&gt; df                       93.0 9.30e+01 89.0000  4.0000</span></span>
+<span id="cb6-9"><a href="#cb6-9" tabindex="-1"></a><span class="co">#&gt; R_squared                  NA 6.52e-16  0.0549  0.0549</span></span>
+<span id="cb6-10"><a href="#cb6-10" tabindex="-1"></a><span class="co">#&gt; f_squared                  NA 6.66e-16  0.0581  0.0581</span></span>
+<span id="cb6-11"><a href="#cb6-11" tabindex="-1"></a><span class="co">#&gt; R_squared_adj              NA 7.77e-16  0.0124      NA</span></span>
+<span id="cb6-12"><a href="#cb6-12" tabindex="-1"></a><span class="co">#&gt; PRE                        NA 6.66e-16  0.0549  0.0549</span></span>
+<span id="cb6-13"><a href="#cb6-13" tabindex="-1"></a><span class="co">#&gt; F(PA-PC,n-PA)              NA       NA  1.2917  1.2917</span></span>
+<span id="cb6-14"><a href="#cb6-14" tabindex="-1"></a><span class="co">#&gt; p                          NA       NA  0.2794  0.2794</span></span>
+<span id="cb6-15"><a href="#cb6-15" tabindex="-1"></a><span class="co">#&gt; PRE_adj                    NA 6.66e-16  0.0124  0.0124</span></span>
+<span id="cb6-16"><a href="#cb6-16" tabindex="-1"></a><span class="co">#&gt; power_post                 NA       NA  0.3887  0.3887</span></span></code></pre></div>
 <p>As shown, the <em>PRE</em> of Model A against Model C is equal to
 Model A’s R_squared. Taken the loss of precision into consideration,
 Model C’s R_squared is zero.</p>

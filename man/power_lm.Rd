@@ -2,44 +2,94 @@
 % Please edit documentation in R/power_lm.R
 \name{power_lm}
 \alias{power_lm}
-\title{Compute the post-hoc power and/or plan the sample size for one or a set of predictors in linear regression}
+\title{Conduct post-hoc and prior power analysis, and plan the sample size for regression analysis}
 \usage{
-power_lm(PRE = 0.02, PC = 0, PA = 1, power = 0.8, sig.level = 0.05, n = NULL)
+power_lm(
+  PRE = 0.02,
+  PC = 1,
+  PA = 2,
+  sig_level = 0.05,
+  power = 0.8,
+  power_ul = 1,
+  n_ul = 1.45e+09,
+  n = NULL
+)
 }
 \arguments{
 \item{PRE}{Proportional Reduction in Error.
-\emph{PRE} = The square of partial correlation.
+PRE = The square of partial correlation.
 Cohen (1988) suggested >=0.02, >=0.13, and >=0.26 as cut-off values of PRE for small,
 medium, and large effect sizes, respectively.}
 
-\item{PC}{Number of parameters of model C (compact model) without focal predictors of interest.}
+\item{PC}{Number of parameters of model C (compact model) without focal predictors of interest.
+Non-integer \code{PC} would be converted to be an integer using \code{as.integer()}.}
 
-\item{PA}{Number of parameters of model A (augmented model) with focal predictors of interest.}
+\item{PA}{Number of parameters of model A (augmented model) with focal predictors of interest.
+Non-integer \code{PA} would be converted to be an integer using \code{as.integer()}.
+\code{as.integer(PA)} should be larger than \code{as.integer(PC)}.}
+
+\item{sig_level}{Expected significance level for effects of focal predictors.}
 
 \item{power}{Expected statistical power for effects of focal predictors.}
 
-\item{sig.level}{Expected significance level for effects of focal predictors.}
+\item{power_ul}{The upper limit of power below which the minimum sample size is searched.
+\code{power_ul} should be larger than \code{power}, and the maximum \code{power_ul} is 1.}
 
-\item{n}{The current sample size. If \emph{n} is given, the post-hoc power would be computed.}
+\item{n_ul}{The upper limit of sample size below which the minimum required sample size is searched.
+Non-integer \code{n_ul} would be converted to be an integer using \code{as.integer()}.
+\code{as.integer(n_ul)} should be at least \code{as.integer(PA) + 1}.}
+
+\item{n}{The current sample size. Non-integer \code{n} would be converted to be an integer using \code{as.integer()}.
+Non-NULL \code{as.integer(n)} should be at least \code{as.integer(PA) + 1}.}
 }
 \value{
-A list with 4 items: (1) \code{post}, the post-hoc F-test, lambda (non-centrality parameter),
-and power for sample size \emph{n};
-(2)\code{minimum}, the minimum sample size required for focal predictors to reach the
-expected statistical power and significance level;
-(3) \code{prior}, a data.frame including \code{n_i}, \code{PC}, \code{PA},\code{df_A_i}, \code{F_i}, \code{p_i}, \code{lambda_i}, \code{power_i}.
-\verb{_i} indicates these statistics are the intermediate iterative results.
-Each row of \code{prior} presents results for one possible sample size \code{n_i}.
-Given \code{n_i}, \code{df_A_i}, \code{F_i}, \code{p_i}, \code{lambda_i} and \code{power_i} would be computed accordingly.
-(4) A plot of power against sample size \emph{n}.
-The cut-off value of \emph{n} for expected statistical power \code{power} and
-expected significance level \code{sig.level} is annotated on the plot.
+A Keng_power class, also a list. If sample size \code{n} is not given, the following results would be returned:
+\verb{[[1]]} \code{PRE};
+\verb{[[2]]} \code{f_squared}, Cohen's f_squared derived from PRE;
+\verb{[[3]]} \code{PC};
+\verb{[[4]]} \code{PA};
+\verb{[[5]]} \code{sig_level}, expected significance level for effects of focal predictors;
+\verb{[[6]]} \code{power}, expected statistical power for effects of focal predictors;
+\verb{[[7]]} \code{power_ul}, the upper limit of power;
+\verb{[[8]]} \code{n_ul}, the upper limit of sample size;
+\verb{[[9]]} \code{minimum}, the minimum sample size \code{n_i} required for focal predictors to reach the
+expected statistical power and significance level, and corresponding
+\code{df_A_C}(the df of the numerator of the F-test, i.e., the difference of the dfs between model C and model A),
+\code{df_A_i}(the df of the denominator of the F-test, i.e., the df of the model A at the sample size \code{n_i}),
+\code{F_i}(the \emph{F}-test of \code{PRE} at the sample size \code{n_i}),
+\code{p_i}(the p-value of \code{F_i}),
+\code{lambda_i}(the non-centrality parameter of the F-distribution for the alternative hypothesis, given \code{PRE} and \code{n_i}),
+\code{power_i}(the actual power of \code{PRE} at the sample size \code{n_i});
+\verb{[[10]]} \code{prior}, a prior power table with increasing sample sizes (\code{n_i}) and power(\code{power_i}).
+
+If sample size \code{n} is given, the following results would also be returned:
+Integer \code{n}, the F_test of \code{PRE} at the sample size \code{n} with
+\code{df_A_C},
+\code{df_A} (the df of the model A at the sample size \code{n}),
+\code{F} (the F-test of \code{PRE} at the sample size \code{n}),
+\code{p} (the p-value of F-test at the sample size \code{n}), and the post-hoc power analysis with
+\code{lambda_post} (the non-centrality parameter of \code{F} at the sample size \code{n}),
+and \code{power_post} (the post-hoc power at the sample size \code{n}).
+
+By default, \code{print()} prints the primary but not all contents of the \code{Keng_power} class.
+To inspect more contents, use \code{print.AsIs()} or list extracting.
 }
 \description{
-Compute the post-hoc power and/or plan the sample size for one or a set of predictors in linear regression
+Conduct post-hoc and prior power analysis, and plan the sample size for regression analysis
+}
+\details{
+\code{power_ul} and \code{n_ul} determine the total times of power_lm()'s attempts searching for the minimum required sample size,
+hence the number of rows of the returned power table \code{prior} and the right limit of the horizontal axis of the returned power plot.
+\code{power_lm()} will keep running and gradually raise the sample size to \code{n_ul} until the sample size pushes the power level to \code{power_ul}.
+When PRE is very small (e.g., less than 0.001) and power is larger than 0.8,
+a huge increase in sample size only brings about a trivial increase in power, which is cost-ineffective.
+To make \code{power_lm()} omit unnecessary attempts, you could set \code{power_ul} to be a value less than 1 (e.g., 0.90),
+and/or set \code{n_ul} to be a value less than 1.45e+09 (e.g., 10000).
 }
 \examples{
 power_lm()
+print(power_lm())
+plot(power_lm())
 }
 \references{
 Cohen, J. (1988). \emph{Statistical power analysis for the behavioral sciences} (2nd ed.). Routledge.
