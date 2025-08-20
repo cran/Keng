@@ -9,12 +9,9 @@
 status](https://www.r-pkg.org/badges/version/Keng)](https://CRAN.R-project.org/package=Keng)
 <!-- badges: end -->
 
-The `Keng` package is named after Loo-Keng Hua, who made great
-achievements in mathematics mainly through self-study. Loo-Keng Hua
-encouraged novices to show their axe skills at the gate of Ban’s house,
-so the `Keng` package comes. In addition, `Keng` is the abbreviation of
-“Knock Errors off Nice Guesses.” Hope the functions and data gathered in
-the `Keng` package help to ease your life.
+`Keng` is the abbreviation of “Knock Errors off Nice Guesses.” Hope the
+functions and data gathered in the `Keng` package help to ease your
+life.
 
 ## Installation
 
@@ -59,8 +56,8 @@ size n.
 `test_r()` tests the significance and compute the post-hoc power of r
 with known sample size n.
 
-`power_r()` conducts prior power analysis and plan the sample size for
-r; post-hoc power analysis would also be conducted with known sample
+`power_r()` conducts a priori power analysis and plan the sample size
+for r; post-hoc power analysis would also be conducted with known sample
 size n. 
 
 ### The linear model
@@ -71,8 +68,8 @@ R<sup>2</sup>, f<sup>2</sup>, and post-hoc power.
 `calc_PRE()` calculates PRE from partial correlation, Cohen’s f, or
 f_squared.
 
-`power_lm()` conducts prior power analysis and plans the sample size for
-one or a set of predictors in regression analysis; post-hoc power
+`power_lm()` conducts a priori power analysis and plans the sample size
+for one or a set of predictors in regression analysis; post-hoc power
 analysis would also be conducted with known sample size n.
 
 ### The `Keng_power` class
@@ -83,3 +80,8 @@ analysis would also be conducted with known sample size n.
 `print()` prints primary but not all contents of the `Keng_power` class.
 
 `plot()` plots the power against sample size for the `Keng_power` class.
+
+### pick\_\* tools
+
+`pick_sl()` and `pick_dcb()` have been added to randomly pick numbers
+for Chinese Super Lotto and Double Color Balls.
