@@ -1,3 +1,8 @@
+# Keng 2025.9.1
+
+* The codes for pick_* tools have been refined.
+* `assess_coa()` has been added to assess course objective achievement in Outcome-Based Education.
+
 # Keng 2025.8.16
 
 * `pick_sl()` and `pick_dcb()` have been added to randomly pick numbers for Chinese 

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>assessCOA</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">assessCOA</h1>
+
+
+
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(Keng)</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code></pre></div>
+<p><code>assess_coa()</code> aims to ease the calculation of course
+objective achievement in Outcome-Based Education. Course objective
+achievements are actually proportions of objectives’ actual grades in
+objectives’ full grades.</p>
+<p><code>assess_coa()</code> has the following arguments:
+<code>data</code>, <code>session_weights</code>, and
+<code>objective_weights1</code>. <code>...</code> indicates
+<code>objective_weights2</code>, <code>objective_weights3</code> … You
+could pass as many <code>objective_weights*</code> as you need.</p>
+<p><code>data</code> is a data.frame that ONLY contains students’ grades
+in each session. Typically, students’ final grades are bases on their
+regular grades and final exam grades, where the number of session is
+two. You may use more sessions, for example, 4, which are: listening,
+speaking, reading, and writing. <code>data</code> should be in the
+common wide-format, in which one student occupies a row, and one session
+occupies a column. The number of columns in <code>data</code>
+corresponds to the number of sessions you need. You may import data from
+external data file like “.csv” file or Excel files. Here we simulate the
+grades of two sessions for 100 students.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="at">session1 =</span> <span class="dv">60</span> <span class="sc">+</span> <span class="fu">sample.int</span>(<span class="dv">40</span>, <span class="dv">100</span>, <span class="dv">1</span>), </span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="at">session2 =</span> <span class="dv">60</span> <span class="sc">+</span> <span class="fu">sample.int</span>(<span class="dv">40</span>, <span class="dv">100</span>, <span class="dv">1</span>))</span></code></pre></div>
+<p>The full score of each session is implicitly assumed to be 100, since
+the weights of each session within the final grade is assigned through
+<code>session_weights</code> by users. <code>session_weights</code> is a
+vector of sessions’ weights, which determine the weights of
+corresponding sessions in determining the final grade. Obviously, the
+sum of all session weights should be 1. The order of elements in
+<code>session_weights</code> should strictly correspond to the order of
+columns in data. The data above has two sessions, hence the length of
+<code>session_weights</code> is 2. We specify the following
+<code>session_weights</code>, in which 0.4 is the weight of column 1 in
+data:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>session_weights <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.4</span>, <span class="fl">0.6</span>)</span></code></pre></div>
+<p>To assess course objective achievement, the most troublesome work is
+to tackle the weights of course objectives, and
+<code>assess_coa()</code> simplifies this work. what we need to do is
+assigning weights to objectives within each session using
+<code>objective_weights*</code> arguments, one
+<code>objective_weights*</code> vector for one session. The element of
+<code>objective_weights*</code> is the weight of corresponding objective
+in determining the grade of corresponding session, and obviously, the
+sum of all objective weights within each session should be 1. The length
+of <code>objective_weights*</code> should be the number of the
+objectives. You may have as many course objectives as you need, and here
+we simulate 3 objectives. Importantly, the order of elements in
+<code>objective_weights*</code> should strictly corresponds to the order
+of objectives. Here, we have two sessions, and we need to assign weights
+using <code>objective_weights1</code> and
+<code>objective_weights2</code>. If you has 10 sessions, then you should
+assign <code>objective_weights1</code> to
+<code>objective_weights10</code>.</p>
+<p>Before we assign <code>objective_weights*</code>, it’s helpful to
+write the objective weight matrix out:</p>
+<table>
+<thead>
+<tr class="header">
+<th></th>
+<th>session1</th>
+<th>session2</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>objective1</td>
+<td>0.5</td>
+<td>0.1</td>
+</tr>
+<tr class="even">
+<td>objective2</td>
+<td>0.3</td>
+<td>0.3</td>
+</tr>
+<tr class="odd">
+<td>objective3</td>
+<td>0.2</td>
+<td>0.6</td>
+</tr>
+</tbody>
+</table>
+<p>Then we specify:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>objective_weights1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.3</span>, <span class="fl">0.2</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>objective_weights2 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.3</span>, <span class="fl">0.6</span>)</span></code></pre></div>
+<p>It’s time for <code>assess_coa()</code> to play its role. Pass
+arguments to it, assign it’s return, a data.frame, to
+<code>coa</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>coa <span class="ot">&lt;-</span> <span class="fu">assess_coa</span>(data, session_weights, objective_weights1, objective_weights2)</span></code></pre></div>
+<p>Now, let’s see the data in <code>coa</code>:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">head</span>(coa)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="do">##   session1 session2 final objective1 objective2 objective3</span></span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="do">## 1       83       64  71.6  0.7861538      0.716  0.6745455</span></span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="do">## 2       61       83  74.2  0.6607692      0.742  0.7900000</span></span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="do">## 3       75       77  76.2  0.7546154      0.762  0.7663636</span></span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="do">## 4       91       85  87.4  0.8961538      0.874  0.8609091</span></span>
+<span id="cb6-7"><a href="#cb6-7" tabindex="-1"></a><span class="do">## 5       63       81  73.8  0.6715385      0.738  0.7772727</span></span>
+<span id="cb6-8"><a href="#cb6-8" tabindex="-1"></a><span class="do">## 6       68       84  77.6  0.7169231      0.776  0.8109091</span></span></code></pre></div>
+<p><code>coa</code> has grades of each session (i.e.,
+<code>session1</code>, <code>session2</code>), final grade (i.e.,
+<code>final</code>), and achievements of each objectives (i.e.,
+<code>objective1</code>, <code>objective2</code>,
+<code>objective3</code>).</p>
+<p><code>coa</code> also has an attribute named “weights”, which
+contains <code>session_weights</code>,
+<code>objective_weights_matrix</code>, and
+<code>weighted_objective_weights_matrix</code>.
+<code>weighted objective_weights matrix</code> is calculated by
+weighting <code>objective_weights matrix</code> using
+<code>session_weights</code>, and was used in <code>assess_coa()</code>
+to calculate achievements. Make sure
+<code>objective_weights_matrix</code> is the same as you intended.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="fu">attr</span>(coa, <span class="st">&quot;weights&quot;</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a><span class="do">## $session_weights</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a><span class="do">## [1] 0.4 0.6</span></span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a><span class="do">## $objective_weights_matrix</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a><span class="do">##            session1 session2</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a><span class="do">## objective1      0.5      0.1</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a><span class="do">## objective2      0.3      0.3</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a><span class="do">## objective3      0.2      0.6</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a><span class="do">## </span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a><span class="do">## $weighted_objective_weights_matrix</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a><span class="do">##            session1 session2</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a><span class="do">## objective1     0.20     0.06</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a><span class="do">## objective2     0.12     0.18</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="do">## objective3     0.08     0.36</span></span></code></pre></div>
+<p>Then we could report overall achievements:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>coa_overall <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>  <span class="at">objective =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(<span class="fu">attr</span>(coa, <span class="st">&quot;weights&quot;</span>)[[<span class="dv">2</span>]])),</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>  <span class="at">achievement =</span> <span class="fu">round</span>(<span class="fu">colMeans</span>(coa[<span class="fu">row.names</span>(<span class="fu">attr</span>(coa, <span class="st">&quot;weights&quot;</span>)[[<span class="dv">2</span>]])]), <span class="dv">2</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="fu">ggplot</span>(coa_overall, <span class="fu">aes</span>(objective, achievement)) <span class="sc">+</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="fu">aes</span>(<span class="at">fill =</span> objective), <span class="at">stat =</span> <span class="st">&quot;identity&quot;</span>) <span class="sc">+</span></span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">y =</span> achievement, <span class="at">label =</span> achievement), <span class="at">vjust =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+<p>Then we could report individual achievements:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># add individual ID</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>coa<span class="sc">$</span>ID <span class="ot">&lt;-</span> <span class="fu">as.numeric</span>(<span class="fu">row.names</span>(coa))</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a><span class="co"># wide format to long format</span></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>coa_long <span class="ot">&lt;-</span> <span class="fu">pivot_longer</span>(coa,</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>             <span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">&quot;objective&quot;</span>),</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>             <span class="at">values_to =</span> <span class="st">&quot;achievement&quot;</span>,</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>             <span class="at">names_to =</span> <span class="st">&quot;objective&quot;</span>,</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a>             <span class="at">names_prefix =</span> <span class="st">&quot;objective&quot;</span>)</span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># plot individual achievement around the overall mean for each objective</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="fu">ggplot</span>(coa_long , <span class="fu">aes</span>(ID, achievement, <span class="at">color =</span> objective)) <span class="sc">+</span></span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="fu">aes</span>(<span class="at">yintercept =</span> achievement, <span class="at">color =</span> objective), <span class="at">linewidth =</span> <span class="dv">2</span>, <span class="at">data =</span> coa_overall) <span class="sc">+</span></span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> objective) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>  <span class="fu">coord_cartesian</span>(<span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAMAAAAjXV6yAAABv1BMVEUAAAAAADoAAGYAOpAAZrYAujgZGUgZGXEZSJcZcboaGho6AAA6ADo6AGY6kNtIGRlIGUhIGXFIl91NTU1NTVNNTV5NTWlNTW5NTY5NWU1NWWRNaX9NaatNbo5Nbp1NbqtNb7VNechNg8hNjshTTYNZTV5ZTWRZZKteTY5hnP9jTU1jTY5kTVNkTY5kq+RmAABmADpmtv9pTY5uTU1uTV5uTWluTW5uTXluTY5ubo5ubqtuq+RxGRlxGUhxuv95TW5/Y15/aW5/tat/zf+DTU2DTVODTW6OTU2OTVmOTWOOTW6OTY6Obk2OtauOyMiOyP+QOgCQkGaQtpCQ29uQ2/+XSBmXupeX3f+dXk2dXlOdbo6dnW6d5P+i//+rY1mrbk2rbm6rboOrbo6rtY6ryKurzaur5OSr5P+2ZgC22/+2//+6cRm6///IeU3Ig03Ijk3IyI7I/8jI/+TI///bkDrb/7bb/9vb///dl0jd///knV7kq2nkq27kyI7k5Kvk/8jk/+Tk///r6+v4dm3/tmb/unH/yHn/yI7/25D/27b/3Zf/5I7/5Kv//6L//7b//7r//8j//9v//93//+T///8tXWj2AAAACXBIWXMAAA7DAAAOwwHHb6hkAAAPWklEQVR4nO2djZ8cNRnHD9pFbWtRiwIKVsEX1rdSUazWdxG0ilexCioKVuVWUFZ6VZDiS3db74SztF7+YCeTt+dJMvMks7M3OzvP79PuzmYytzffe/IkeZJMNgSrVhtd/wKrLgZEiAERYkCEGBAhBkSIARFiQIQYECEGRIgBEWJAhBgQIQZEiAERahXQm+/9Y07uO48c+XpG/utHjrwj5+e3ozYBXc+6gbe/9rR48z1PJ+eX9F97V4NfazG1COilO36WY0HX5c2+lGNCuSbaijosYkJZUY76bUH5gP730/dl/fg778jj2Ya6BPT2V7P4iHyLa0Gd1mJ5Dkgq02e1oO4A5fK5/s6/DcuCXjsilQGpuKDvPmgdxYAIMSBCDIgQAyK0AKCZ/u9e8CeX5PLXZnMvIsxR+3VLFAMixIAIMSBCDIgQAyLEgAjVAto7s12+33zixMmr9s2IAe2cuKcEtP/cpnjjQfNmdVCAxuMx9XVLVA2g6d2/UxZ08wfb0pj0mz3fENBoNKrIFgc0HitCqwfIFrG9r1wVN89t6Td9bmY0n89ndfLyj6QyLhgr0fmXpBRAOydLMvrNnlV/xLmUSLagkVK6BWlA/bMg/TvO55qQ/Y3tp+UCklaF8y9HKYDqfFAASH1sD1CFDxobcKsAaP+5s6oWOxvWYj4g/bnaSWs+PiCZmFGLja06ByT/17WDFB/rh0hA8VpMuW4hYoCczZQFywM0bn7vSVq8Ja35aCweIAXO5Y+UJwnMFrxqQMBmxkjNbyBJiwHShjM3EtYHKUdkEk1+CEgXqhGQzYXz63JWoeY3kKSFABn3M/cIaUyzeQ0gXahGBCBTgVXy6dQH1cs6aAxoJuZYNr95sU7HFa4qH2RrqpjhWI+0TLUCSCBA84aAhKv+TX5gJT0GBLy0TPb51AOyhPRRDqCVL2ICQphppxMAAvnVC+QisJc25czk92kUR45QD5w0JGRb0bWAYHEybrkGECDUT0DOijCuKkAjWmEtBnmAlP4CEnE+YlbLJ+qDXGdVtQ8BM9ETHyRsY8gBss3puW5Sm/z1gCK1GASkOqx9qsUADgF6HLhLnwpICFDNmfwihqQ3tRiowARoOqv7sum4s2pxRD1PdW/e89TYbS9XjQEBJ4P6Yn4cw12hAeHqTMNBXVeX3+tl4ChHfwBhl1wDaGQAocIFAdniJsIiBgXSm95AohYGJPxKyxUxrxpzRELX42JFPqAYHZjeAx/kA5p70vkdFN/1wAMfUIQPSl/9WiygEUmSilZcLvABs+if7wMSMUCrW8T0kJinWJrK76zGHoCBMvlphAGVQ2J4WMw/PAhCLXVWTVGLmZXKHZYwEe+e2VpM4bDGo7tmEd+0wO3Tag1QECer8kGwJ+9V+CEfzzfDGrIPgFBvnuAjXBUFTMalI78tFfge45F7ZEGQUBxQ0A4q63TPUyda0BiMpfqmtTy11ZtHrkhUABKRQhX00Wz+GCH9I8LEpamtIgadkQCNpAgg3+l4SS5/JaBI4tLUXi0GnA44TAA0qrCgWC+jTI8lLk3tBO0rlQTI5+XyxwDBT/0HNPcAjeBARgNAY5Qk7MyG5elgAVHG4wGKOKGIPS1w9wlquy9WCyiLj/M11aBsJH95Wrg3T3BaAJDDEKvPsCEtT4sHzCjp/ElwICGqfDEgBsSAmgHShFaDDwOi1AKgyj4H5BMnhJtGszigyn797AD4tAQIjmKQgEB8A/XtvZBivdmAmMeCBAi1NbJaIoq1rW1+e/d+eYqXMBpQ50XMTot+44TUZvl+j5tpbwG4oeeIEZncgZ0EJQvzoXwQGrNfoqoB4eVhciXLdBOe10hEZWAIE4q5IMjMZAhDriESnLxcVQNCSzPkIpb957fAaXD7iwIawY5sDaBoDK27gUO0uEeaUlHkZEHT0revF4x5UGYhIK8gjWZgIGyEVpKZC8Z60KdqPMykLomMVjUguDysfN97FFqRZyae0YQm5BsNrsDcvAU0/QUXreoo7BKVZkE7dhHL1DehCCGBY0Uqu1+sZjARzFuAgAIWaLDnYAil+aDpWZMKHDUGNBMQSPlpVgcoMiRmLUspEjCLxz3a5BGorhazy8NUwZJmtH8RLKircjvCxJ+RE4oQCvngWa4Rj6yJrAIg3Q4q14upkla0g+4GFdm8CpCd0glX+1gsGYAS+2NLAWO0eEu6ApD1TDp7DAYJKInQYgAoQUA3Tp2Wb9dufzHlSs9JhwsTdLJWIh9/EufCfHaPXUDvUP/5QzQZqSVAqLUYqeRrAOFYdeU86YpBDnKGWQ0BEo6UA3R5w+gwfZkUhlDGH0I+SV0NtywznAbsSCCrsQcHB8haUKr8lZi4cq8lFPTo3QzgiiIm8CTysWoHiRpAt86Xf+rdYz/e2Dj0aklDJsnioU7tHt3YOL577Cfnjxe5L9/+ojlbDShTbvoLXi1fAQi2nf0hVm/ucAhI4HmtoHRVAbp1/nD5f/fooVfL92MX5Ju4rD5KY5DMiv9FSpHzuDlbB0gy3YhhJAAZZQASeF5rDJDnisHMaEeqGlDpSYuX3aOny8JU/CuTCjLQb6szApytAVQyTJcPwgY/4nzg0HMKIL+uCptFs7qR52vSFuTtv9tS0V72uKmFNJnCeqTlmLM1gPJ8UMgHrZYP+MDaytGArjkfkCl+iYB0+fEAFVn/qhjFfg62oAxAET5wrQZipgGNIoCca3auKQJIxCaWuQefxADddkEVMVmedBGTSQI3jeT/Gw8/VVA0Z2sApbaAqgHZbti8FpAQvs3AtlAEkPAAJfTFok66MJKCgzllHLWYyOrOnK0BdOPURrqTXgCQV578eZ2RUQ2TDdgTBQhV84eFreYlAX1KgikBXds4rS8IrajlgcMAUOiDoPupA+Q/4QWPhJF8fCW1CiNqC5DruPt1vb1ihtqC9jk5NCBYEs1LLh9ROusGwoCKqu50hTf3FRjO3NViuK43V+DbxO464oOAudhORwCI7mpoTVI7UL4QoMmhv5w6ndoaipQsz7lkAQpqMdUy9JC4nwMqt6XKawdJx55al4HuKfjUGFC8q2FfUH2v6eH8y9GigAQsWa7eAo4I5Qc0LKGGgIL8yxEqYpdlEbtxym9tVyi4MWAxzhHh/PAi2M1IBjTuFFDRIIj0RuKKPPHRNH1qHzQJZJpFaRfYOn+FHjRZrwQLQn/g4C8P2o20BXnLeDuyoCyFN+b7INEqoCDKcfCA8uNBHg1ci1GARI4PWgVAmfGgCCART3L5vWwZtZh8qWxXL1GLxKTFwoCqkkSYw1RlXdZiWfGgTgBVfVqiGseDBgloYSct4kkuf78B3Tqf2IZW6gsg1Jx3Sox/9MtJZwGKx/OMriUWlDV20rWAJrc9lW9BmVG3XgNqWMQygvZDBJQpBkRo1QEZtVeLZQXt+wOoQk0AZQXtBwioUUxa9BVQohgQoTaD9usPCAft3T4jeiUdb8CGBBbUqQUaXW3AtqqA3GIWvQaqpQ3YegwIex+3HEqvpKvYgI1Sbv7sCw4OUDmX3Hbo3YI6vZIuvgGbGJAFSU3sLCtvv7XpZnQDNiEGBqjQRLWDPJcz3WQfJDWx0Q63oE6vpItuwFbxG68poAmaxegW1OmVdINvB61ZTLodDSAetJgGEA+C8x6t5BBgUnlZ43jQKJQ9d+PhC4kzp9c43FEH6Fo50T7FhAYKqLzdwoporXE8iACUONDeeBJn3wGl2sEAqvmKWiyxzTcAQDEl83GASg+9VkPPdVILVHNrsUz1GVC6GBAhnoJHqNt50j0DxOGOiNZ4Cl474nnShEA7yD4/KAnTIMfF8jQwC8rXAAHJCEB6XT9AQBPJZm1Cru2o+VPwGBCl4QGSj4JLD7X1BlD0ASjXUrucaxxyHYey5+Qc4MtJvnaNq/k6QFJpE6UHDKiBBa1XPKge0O7R+EPdfHlLMosOfXLQo9+AmgwcSjST4+oJhAladUBG0VpMqsnQsyyYQ2gHSSNoMPQ8Kemkzn/pMyA57pPvg8rO6iTxwp4DStYaV/PtiAERYkCEGBChlA3YxN4j5bZQ3gZsQwfklofJBRpyQQvegG3wgNzSjB2JabqJN2BjQHhxT3GEN2DjcTG0PEwuZMEbsLEFQQu6+YTZYAz4oaEDAsvD9h6xWBiQlVsepvkEG7CJYQNy68XARrRwA7bBA6LEgAgxIEIMiBADIsSACDEgQgyIEAMixIAIMSBCDIgQAyLEgAgxIEIMiBADIsSACDGgWvG4GCm2IEIMiBADIsSACDEgQgyIEAMixIAIMSBCDIgQAyLEgAgxIEIMiBADIsSACDEgQgyIEAMiNHhAbr2YPhr8vhpYbr2YPuL9xbDcWg19xHv7YLnVPvqI9xfDcuvF9BHvL4ZFWBADYh9UKmW9mD7i/cU8uf3FuB3USAyIEAMixIAIMSCWYECkGBAhBkSIARFiQIQYECEGRIgBEWoKSHf13ePxygfklU/xKp8U87pMeMVFAf4Z5i8veMw9Wab47MIG9z9WHqV/wVX6d26khoDUCId7PJ567pIe99g5eXVH3g0YDblyL84v4AUylvsnfMH+Mx+VR+lfAANVraohIBVd/LN5PN4L6tFmKvWVc1vTD3zzoW0YiXzrE7+C+bf2wQVf+kZB4K5vn4EX3Dz36e3iaCf5C2Cos1U1BOTi0+bxeNLsVeovHxSqKDzpYtlvffzZIL+54LsP6PybLvi99+XHt3T8O+0LYLC8VTUEZEc41OPxfv/oC/KPXKZ+vygSYu8LD23v//o+Oxry7/c/C/Nv7X3xW9KK5Kn/fuY7Qv6IM5ee/60dPtm53wBK/IJVA2T+aPDxeFNlAd+7T/pLafIvfzKwIPQ4PXWBZKcumD4ZWlDqF6waIF3s0ePxpptl6qc+Jz/K33/6Wc8H4fxCXfDyx7b1BdMf+T5IJH/BqvkgNcJhH4/395P/unjp4rZMvfLBcqzxQ5/f3v/ND+1oyJV7Uf6rOx/+xfZ+ecH+zx8ok/5x5tLFS3b4ZP+Zj8ij9C9YtVpMNT3A4/HUA/JkA+bx0tZflwk3vXYQyH+XvUCVMPWEPb8dlPEFK9YOGo4YECEGRIgBEWJAhBgQoY4A7R67cOt8uVdX1gblHahLQHKvwFvnE3cS6kpdA8rdw/3A1TmgxJ30OlP3gFL3e+tIKwAoa5P7A9cKAGILiggAmrAPiohrMULcDiLkWtKpO0t3Je6LEWJAhBgQIQZEiAERYkCEGBAhBkSIARFiQIT+D39aa9bDrW3VAAAAAElFTkSuQmCC" /><!-- --></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># visualize the distribution of achievements for each objective</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a><span class="fu">ggplot</span>(coa_long, <span class="fu">aes</span>(achievement, <span class="at">fill =</span>  objective)) <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(count <span class="sc">/</span> <span class="fu">sum</span>(count))), <span class="at">bins =</span> <span class="dv">20</span>) <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> objective) <span class="sc">+</span></span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div>
+<p><img role="img" src="data:image/png;base64,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" /><!-- --></p>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
